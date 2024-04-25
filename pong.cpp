@@ -46,10 +46,15 @@ void clearWindow(){
 
 
 void SetBall(int y,int x){
-    ballPositionX =x;
-    ballPositionY =y;
-    
-    screen[ballPositionY][ballPositionX]="○";
+
+
+    if (y >= 0 && y < pannelHeight && x >= 0 && x < pannelWidth) {
+        ballPositionX = x;
+        ballPositionY = y;
+        screen[ballPositionY][ballPositionX] = "○";
+    } else {
+        cout << "Error: Attempted to set ball outside screen bounds." << endl;
+    }
     
 }
 
