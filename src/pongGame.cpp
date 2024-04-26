@@ -1,5 +1,17 @@
-class pongGame(){
+#include <vector>
+#include <string>
+#include <unistd.h>
+#include <ball.h>
+#include <screen.h>
+#include <pongGame.h>
+
+using std::string;
+
+class pongGame
+{
+
     int padle1Score = 0;
+
     int padle2Score = 0;
 
     int padle1Y = 0;
@@ -18,17 +30,14 @@ class pongGame(){
     const int pannelWidth = 16 * growthFactor;
     const int padleHeight = 2 + 1 * growthFactor;
     // string screen[pannelHeight][pannelWidth];
-    std::vector<std::vector<string>> screen = std::vector<std::vector<string>>(pannelHeight, std::vector<string>(pannelWidth));
 
 
     bool FlipBallDirection = false;
 
     string BallDirection = "";
 
-
-
-
-    void play(){
+    void play()
+    {
 
         padle1Y = 1;
         padle2Y = 1;
@@ -81,7 +90,7 @@ class pongGame(){
         }
     }
 
-  void SetupGame()
+    void SetupGame()
     {
         clearWindow();
         setUpPlayfield();
@@ -89,10 +98,7 @@ class pongGame(){
         SetPadle(4, 4);
     }
 
-   
-
- 
-    // check if game is won 
+    // check if game is won
     bool CheckWin(int GotoPositionX)
     {
 
@@ -108,8 +114,6 @@ class pongGame(){
         }
         return false;
     }
-
-   
 
     void setUpPlayfield()
     {
@@ -130,11 +134,4 @@ class pongGame(){
             }
         }
     }
-
-
-
-   
-
-  
-
 }

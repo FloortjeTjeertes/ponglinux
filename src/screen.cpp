@@ -1,6 +1,27 @@
-class screen{
 
-     void clearWindow()
+#include <vector>
+#include <stdio.h>
+#include <iostream>
+#include <screen.h>
+#include <string>
+
+using std::string;
+
+
+class screen
+{
+
+    std::vector<std::vector<std::string>> screen = std::vector<std::vector<std::string>>(pannelHeight, std::vector<std::string>(pannelWidth));
+    const int growthFactor = 2;
+    const int pannelHeight = 9 * growthFactor;
+    const int pannelWidth = 16 * growthFactor;
+    const int padleHeight = 2 + 1 * growthFactor;
+    int ballPositionY = 3;
+    int ballPositionX = 4;
+
+    
+
+    void clearWindow()
     {
         for (int y = 0; y < pannelHeight; y++)
         {
@@ -16,8 +37,8 @@ class screen{
 
         if (y >= 0 && y < pannelHeight && x >= 0 && x < pannelWidth)
         {
-            ballPositionX = x;
-            ballPositionY = y;
+            int ballPositionX = x;
+            int ballPositionY = y;
             screen[ballPositionY][ballPositionX] = "○";
         }
         else
@@ -25,7 +46,7 @@ class screen{
             cout << "Error: Attempted to set ball outside screen bounds." << endl;
         }
     }
-        void SetPadle(int Y1, int Y2)
+    void SetPadle(int Y1, int Y2)
     {
         for (int i = 0; i < padleHeight; i++)
         {
@@ -37,9 +58,16 @@ class screen{
         }
     }
 
-     void writeWindow()
-    {
+    void writeScore(){
+        int padle1Score;
+        int padle2Score;
+        int BallDirection;
+        cout << "Padle1=" << padle1Score << " padle2=" << padle2Score << " ball direction= " << BallDirection << " X=" << ballPositionX << " Y=" << ballPositionY << endl;
 
+    }
+
+    void writeWindow()
+    {
         cout << "\x1B[2J\x1B[H";
 
         for (int y = 0; y < pannelHeight; y++)
