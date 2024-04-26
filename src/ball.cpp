@@ -2,15 +2,14 @@
 #include <screen.h>
 #include <iostream>
 
+#include "ball.h"
+
 using std::string;
 using std::cout;
 
-class Ball
-{
 
-private:
-    int ballPositionY = 0;
-    int ballPositionX = 0;
+    int Y = 0;
+    int X = 0;
     int GoTox = 0;
     int GoToy = 0;
     string ballDirection = "";
@@ -19,28 +18,27 @@ private:
     bool east = true;
     bool west = false;
 
-public:
-    Ball(int ballPositionY, int ballPositionX)
+    Ball::Ball(int ballPositionY, int ballPositionX)
     {
-        this->ballPositionY = ballPositionY;
-        this->ballPositionX = ballPositionX;
+        this->Y = ballPositionY;
+        this->X = ballPositionX;
     }
 
-    int getBallPositionY()
+    int  Ball::getBallPositionY()
     {
-        return ballPositionY;
+        return Y;
     }
 
-    int getBallPositionX()
+    int  Ball::getBallPositionX()
     {
-        return ballPositionX;
+        return X;
     }
 
-    void ballAi(Screen screen)
+    void  Ball::ballAi(Screen screen)
     {
 
-        GoTox = ballPositionX;
-        GoToy = ballPositionY;
+        GoTox = X;
+        GoToy = Y;
 
         string NS;
         string EW;
@@ -79,17 +77,16 @@ public:
                 east = !east;
                 west = !west;
             }
-            GoToy = ballPositionY;
-            GoTox = ballPositionX;
+            GoToy = Y;
+            GoTox = X;
         }
-        ballPositionY = GoToy;
-        ballPositionX = GoTox;
+        Y = GoToy;
+        X = GoTox;
 
         ballDirection = NS + " " + EW;
     }
 
-private:
-    bool checkBounce(int GotoPositionY, int GotoPositionX, Screen screen)
+    bool  Ball::checkBounce(int GotoPositionY, int GotoPositionX, Screen screen)
     {
         bool bounce = false;
         if (screen.getScreen(GotoPositionY,GotoPositionX)  == "#" || screen.getScreen(GotoPositionY,GotoPositionX) == "|")
@@ -102,4 +99,3 @@ private:
 
         return bounce;
     }
-};

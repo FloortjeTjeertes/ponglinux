@@ -8,8 +8,7 @@
 
 using std::string;
 
-class PongGame
-{
+
 
     int padle1Score = 0;
 
@@ -23,36 +22,47 @@ class PongGame
     bool adding;
 
 
-    const int growthFactor = 2;
-    const int pannelHeight = 9 * growthFactor;
-    const int pannelWidth = 16 * growthFactor;
-    const int padleHeight = 2 + 1 * growthFactor;
+     int scale = 2;
+     int screen_Height = 9 * scale;
+     int screen_Width = 16 * scale;
+     int padle_Height = 2 + 1 * scale;
 
 
     bool FlipBallDirection = false;
 
     string BallDirection = "";
 
+    PongGame::PongGame()
+    {
+        padle1Score = 0;
+        padle2Score = 0;
+        padle1Y = 0;
+        padle2Y = 0;
+        ballPositionY = 3;
+        ballPositionX = 4;
+        adding = true;
+        FlipBallDirection = false;
+        BallDirection = "";
+    }
 
-    void play()
+    void PongGame::play()
     {
 
         padle1Y = 1;
         padle2Y = 1;
-        bool adding = true;
 
 
-        Screen newScreen(pannelHeight, pannelWidth, padleHeight);
+        Screen newScreen(screen_Height, screen_Width, padle_Height);
         Ball ball(3,4);
-        Padle padle1(1,2,padleHeight, pannelHeight);
-        Padle padle2(1,pannelWidth-2,padleHeight, pannelHeight);
+        Padle padle1(1,2,padle_Height, screen_Height);
+        Padle padle2(1,screen_Width-2,padle_Height, screen_Height);
 
         // game loop
         while (true)
         {
 
             newScreen.clearWindow();
-            setUpPlayfield(newScreen);
+            PongGame::setUpPlayfield(newScreen);
 
             usleep(10000 * 10);
             ball.ballAi(newScreen);
@@ -64,14 +74,14 @@ class PongGame
         
             if (checkWin(ballPositionX))
             {
-                setupGame(screen);
+                PongGame::setupGame(newScreen,ball,padle1,padle2);
             };
 
-            writeWindow();
+           newScreen.writeWindow(padle1Score, padle2Score, BallDirection);
 
           
 
-            // if(padle1Y==pannelHeight-padleHeight||padle1Y==0){
+            // if(padle1Y==screen_Height-padle_Height||padle1Y==0){
             //     adding=!adding;
             // }
             // if(adding){
@@ -87,20 +97,20 @@ class PongGame
         }
     }
 
-    void setupGame(Screen sc,Ball ball,Padle player1, Padle player2)
+    void PongGame::setupGame(Screen sc,Ball ball,Padle player1, Padle player2)
     {
         sc.clearWindow();
-        this->setUpPlayfield(sc);
-        sc.SetPadle(player1);
-        sc.SetPadle(player2);
-        sc.SetBall(ball);
+        setUpPlayfield(sc);
+        sc.setPadle(player1);
+        sc.setPadle(player2);
+        sc.setBall(ball);
     }
 
     // check if game is won
-    bool checkWin(int GotoPositionX)
+    bool PongGame::checkWin(int GotoPositionX)
     {
 
-        if (GotoPositionX == pannelWidth - 2)
+        if (GotoPositionX == screen_Width - 2)
         {
             padle2Score++;
             return true;
@@ -113,23 +123,23 @@ class PongGame
         return false;
     }
 
-    void setUpPlayfield(Screen screen)
+    void PongGame::setUpPlayfield(Screen screen)
     {
 
-        for (int y = 0; y <= pannelHeight; y++)
+        for (int y = 0; y <= screen_Height; y++)
         {
-            for (int x = 0; x <= pannelWidth; x++)
+            for (int x = 0; x <= screen_Width; x++)
             {
-                if (y == 0 || y == pannelHeight - 1)
+                if (y == 0 || y == screen_Height - 1)
                 {
-                    screen[y][x] = "#";
+                    screen.getScreen(y, x) = "#";
                 }
                 else
                 {
-                    screen[y][0] = "#";
-                    screen[y][pannelWidth - 1] = "#";
+                    screen.getScreen(y, 0) = " ";
+                    screen.getScreen(y, screen_Width - 1) = "#";
+
                 }
             }
         }
     }
-}

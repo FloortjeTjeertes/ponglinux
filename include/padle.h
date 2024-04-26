@@ -9,7 +9,7 @@ class Padle
 private:
     int padleY;
     int padleX;
-    int padleHeight;
+    int height;
     int pannelHeight;
 
 public:

@@ -1,33 +1,30 @@
-#include "padle.h"
 #include "ball.h"
+#include "padle.h"
 
-class Padle
-{
-private:
+
     int padleY = 0;
     int padleX = 0;
-    int padleHeight =0;
+    int height =0;
     int pannelHeight = 0;
 
 
-public:
 
 
-    Padle(int yPostition,int xPosition,int padleHeight, int pannelHeight)
+    Padle::Padle(int yPostition,int xPosition,int height, int pannelHeight)
     {
         this->padleY = yPostition;
         this->padleX = xPosition;
-        this->padleHeight = padleHeight;
+        this->height = height;
         this->pannelHeight = pannelHeight;
     }
 
 
-    int getPadleY()
+    int  Padle::getPadleY()
     {
         return padleY;
     }
 
-    int getPadleX()
+    int  Padle::getPadleX()
     {
         return padleX;
     }
@@ -35,19 +32,18 @@ public:
  
 
 
-    void padleAi(Ball ball)
+    void  Padle::padleAi(Ball ball)
     {
-         if (ball.getBallPositionY() + padleHeight / 2 > pannelHeight - padleHeight / 2)
+         if (ball.getBallPositionY() + height / 2 > pannelHeight - height / 2)
             {
-                padleY = pannelHeight - padleHeight - 1;
+                padleY = pannelHeight - height - 1;
             }
-            else if (ball.getBallPositionY() < padleHeight / 2)
+            else if (ball.getBallPositionY() < height / 2)
             {
                 padleY = 1;
             }
             else
             {
-                padleY = ball.getBallPositionY() - padleHeight / 2;
+                padleY = ball.getBallPositionY() - height / 2;
             }
     }
-};

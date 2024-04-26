@@ -18,20 +18,19 @@ private:
     int ballPositionY;
     int ballPositionX;
     bool adding;
-    const int growthFactor;
-    const int pannelHeight;
-    const int pannelWidth;
-    const int padleHeight;
+    int growthFactor;
+    int pannelHeight;
+    int pannelWidth;
+    int padleHeight;
     bool FlipBallDirection;
     std::string BallDirection;
-    Screen screen;
 
 public:
     PongGame();
     void play();
-    void setupGame(Screen sc, Ball ball, Padle player1, Padle player2);
+    void setupGame(Screen sc,Ball ball,Padle player1, Padle player2);
     bool checkWin(int GotoPositionX);
-    void setUpPlayfield();
+    void setUpPlayfield(Screen screen);
 };
 
 #endif // PONGGAME_H

@@ -1,5 +1,5 @@
 #include <stdio.h>
-#include <pongGame.h>
+#include "pongGame.h"
 
 // #include <X11/Xlib.h>
 using namespace std;
@@ -8,7 +8,6 @@ using namespace std;
 int main()
 {
     PongGame pongGame;
-    pongGame.SetupGame();
     pongGame.play();
 
     return 0;

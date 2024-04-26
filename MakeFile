@@ -2,7 +2,7 @@
 CXX = g++
 
 # Compiler flags
-CXXFLAGS = -Wall -std=c++11 -I./include
+CXXFLAGS = -Wall -std=c++11 -I./include -g
 
 # Target executable name
 TARGET = pong
@@ -10,17 +10,28 @@ TARGET = pong
 # Source files
 SRCS = $(wildcard src/*.cpp)
 
+# Build directory
+BUILDDIR = build
+
+# Bin directory
+BINDIR = bin
+
 # Object files
-OBJS = $(patsubst src/%.cpp, src/%.o, $(SRCS))
+OBJS = $(patsubst src/%.cpp, $(BUILDDIR)/%.o, $(SRCS))
 
-all: $(TARGET)
+all: $(BUILDDIR) $(BINDIR)/$(TARGET)
 
-$(TARGET): $(OBJS)
-	$(CXX) $(CXXFLAGS) -o $(TARGET) $(OBJS)
+$(BINDIR)/$(TARGET): $(OBJS)
+	$(CXX) $(CXXFLAGS) -o $@ $(OBJS)
 
-src/%.o: src/%.cpp
+$(BUILDDIR)/%.o: src/%.cpp
 	$(CXX) $(CXXFLAGS) -c $< -o $@
 
+$(BUILDDIR):
+	mkdir -p $(BUILDDIR)
+
+$(BINDIR):
+	mkdir -p $(BINDIR)
+
 clean:
-	$(RM) $(OBJS) $(TARGET)
-	
+	$(RM) -r $(BUILDDIR) $(BINDIR)

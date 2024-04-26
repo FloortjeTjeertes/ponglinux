@@ -8,8 +8,8 @@
 class Ball
 {
 private:
-    int ballPositionY;
-    int ballPositionX;
+    int Y;
+    int X;
     std::string ballDirection;
     bool north;
     bool south;
@@ -21,6 +21,7 @@ public:
     int getBallPositionY();
     int getBallPositionX();
     void ballAi(Screen screen);
+    bool checkBounce(int GotoPositionY, int GotoPositionX, Screen screen);
 };
 
 #endif // BALL_H
