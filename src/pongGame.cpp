@@ -1,13 +1,14 @@
 #include <vector>
 #include <string>
 #include <unistd.h>
-#include <ball.h>
-#include <screen.h>
-#include <pongGame.h>
+#include "ball.h"
+#include "padle.h"
+#include "screen.h"
+#include "pongGame.h"
 
 using std::string;
 
-class pongGame
+class PongGame
 {
 
     int padle1Score = 0;
@@ -20,21 +21,18 @@ class pongGame
     int ballPositionY = 3;
     int ballPositionX = 4;
     bool adding;
-    bool north = true;
-    bool south = false;
-    bool east = true;
-    bool west = false;
+
 
     const int growthFactor = 2;
     const int pannelHeight = 9 * growthFactor;
     const int pannelWidth = 16 * growthFactor;
     const int padleHeight = 2 + 1 * growthFactor;
-    // string screen[pannelHeight][pannelWidth];
 
 
     bool FlipBallDirection = false;
 
     string BallDirection = "";
+
 
     void play()
     {
@@ -42,37 +40,36 @@ class pongGame
         padle1Y = 1;
         padle2Y = 1;
         bool adding = true;
+
+
+        Screen newScreen(pannelHeight, pannelWidth, padleHeight);
+        Ball ball(3,4);
+        Padle padle1(1,2,padleHeight, pannelHeight);
+        Padle padle2(1,pannelWidth-2,padleHeight, pannelHeight);
+
         // game loop
         while (true)
         {
 
-            this.clearWindow();
-            setUpPlayfield();
+            newScreen.clearWindow();
+            setUpPlayfield(newScreen);
 
             usleep(10000 * 10);
-            SetPadle(padle1Y, padle2Y);
+            ball.ballAi(newScreen);
+            padle1.padleAi(ball);
+            padle2.padleAi(ball);
+            newScreen.setPadle(padle1);
+            newScreen.setPadle(padle2);
 
-            BallAi();
-            if (CheckWin(ballPositionX))
+        
+            if (checkWin(ballPositionX))
             {
-                SetupGame();
+                setupGame(screen);
             };
 
             writeWindow();
 
-            if (ballPositionY + padleHeight / 2 > pannelHeight - padleHeight / 2)
-            {
-                padle1Y = pannelHeight - padleHeight - 1;
-            }
-            else if (ballPositionY < padleHeight / 2)
-            {
-                padle1Y = 1;
-            }
-            else
-            {
-                padle1Y = ballPositionY - padleHeight / 2;
-            }
-            padle2Y = padle1Y;
+          
 
             // if(padle1Y==pannelHeight-padleHeight||padle1Y==0){
             //     adding=!adding;
@@ -90,16 +87,17 @@ class pongGame
         }
     }
 
-    void SetupGame()
+    void setupGame(Screen sc,Ball ball,Padle player1, Padle player2)
     {
-        clearWindow();
-        setUpPlayfield();
-        SetBall(4, 4);
-        SetPadle(4, 4);
+        sc.clearWindow();
+        this->setUpPlayfield(sc);
+        sc.SetPadle(player1);
+        sc.SetPadle(player2);
+        sc.SetBall(ball);
     }
 
     // check if game is won
-    bool CheckWin(int GotoPositionX)
+    bool checkWin(int GotoPositionX)
     {
 
         if (GotoPositionX == pannelWidth - 2)
@@ -115,7 +113,7 @@ class pongGame
         return false;
     }
 
-    void setUpPlayfield()
+    void setUpPlayfield(Screen screen)
     {
 
         for (int y = 0; y <= pannelHeight; y++)

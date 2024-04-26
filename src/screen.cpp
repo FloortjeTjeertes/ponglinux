@@ -2,22 +2,44 @@
 #include <vector>
 #include <stdio.h>
 #include <iostream>
-#include <screen.h>
 #include <string>
+#include "screen.h"
 
 using std::string;
+using namespace std;
 
-
-class screen
+class Screen
 {
 
+private:
     std::vector<std::vector<std::string>> screen = std::vector<std::vector<std::string>>(pannelHeight, std::vector<std::string>(pannelWidth));
-    const int growthFactor = 2;
-    const int pannelHeight = 9 * growthFactor;
-    const int pannelWidth = 16 * growthFactor;
-    const int padleHeight = 2 + 1 * growthFactor;
-    int ballPositionY = 3;
-    int ballPositionX = 4;
+    const int growthFactor = 0;
+    const int pannelHeight = 0;
+    const int pannelWidth = 0;
+    const int padleHeight = 0;
+public:
+    Screen(int pannelHeight, int pannelWidth, int padleHeight)
+    {
+        pannelHeight = pannelHeight;
+        pannelWidth = pannelWidth;
+        padleHeight = padleHeight;
+    }
+
+    int getScreenHeight()
+    {
+        return pannelHeight;
+    }
+
+    int getScreenWidth()
+    {
+        return pannelWidth;
+    }
+
+    string getScreen(int y, int x)
+    {
+        return screen[y][x];
+
+    }
 
     
 
@@ -32,13 +54,13 @@ class screen
         }
     }
 
-    void SetBall(int y, int x)
+    void setBall(Ball ball)
     {
 
-        if (y >= 0 && y < pannelHeight && x >= 0 && x < pannelWidth)
+        if (ball.getBallPositionY() >= 0 && ball.getBallPositionY() < pannelHeight && ball.getBallPositionX() >= 0 && ball.getBallPositionX() < pannelWidth)
         {
-            int ballPositionX = x;
-            int ballPositionY = y;
+            int ballPositionX = ball.getBallPositionX();
+            int ballPositionY = ball.getBallPositionY();
             screen[ballPositionY][ballPositionX] = "○";
         }
         else
@@ -46,27 +68,23 @@ class screen
             cout << "Error: Attempted to set ball outside screen bounds." << endl;
         }
     }
-    void SetPadle(int Y1, int Y2)
+    void setPadle(Padle padle)
     {
         for (int i = 0; i < padleHeight; i++)
         {
-            screen[Y1 + i][1] = '|';
+            screen[padle.getPadleY() + i][1] = '|';
         }
-        for (int i = 0; i < padleHeight; i++)
-        {
-            screen[Y2 + i][pannelWidth - 2] = '|';
-        }
+    
     }
 
-    void writeScore(){
-        int padle1Score;
-        int padle2Score;
-        int BallDirection;
+    void writeScore( int padle1Score, int padle2Score, int BallDirection){
+        
+        int BallDirection=0;
         cout << "Padle1=" << padle1Score << " padle2=" << padle2Score << " ball direction= " << BallDirection << " X=" << ballPositionX << " Y=" << ballPositionY << endl;
 
     }
 
-    void writeWindow()
+    void writeWindow(int padle1Score, int padle2Score, int BallDirection)
     {
         cout << "\x1B[2J\x1B[H";
 
@@ -83,7 +101,6 @@ class screen
             cout << row << "" << y << endl
                  << flush;
         }
-
-        cout << "Padle1=" << padle1Score << " padle2=" << padle2Score << " ball direction= " << BallDirection << " X=" << ballPositionX << " Y=" << ballPositionY << endl;
+        writeScore( padle1Score,  padle2Score,  BallDirection);
     }
 }

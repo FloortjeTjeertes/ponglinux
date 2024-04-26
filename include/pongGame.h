@@ -1,30 +1,37 @@
 // PongGame.h
-
 #ifndef PONGGAME_H
 #define PONGGAME_H
 
+#include <vector>
 #include <string>
-namespace pong
-{
+#include "screen.h"
+#include "ball.h"
+#include "padle.h"
+
 class PongGame
 {
-    
-public:
-    void SetupGame();
-    void play();
-    // Add other public methods here
-
 private:
-    int padle2Y = 0;
-    int ballPositionY = 3;
-    int ballPositionX = 4;
+    int padle1Score;
+    int padle2Score;
+    int padle1Y;
+    int padle2Y;
+    int ballPositionY;
+    int ballPositionX;
     bool adding;
-    bool north = true;
-    bool south = false;
-    bool east = true;
-    bool west = false;
+    const int growthFactor;
+    const int pannelHeight;
+    const int pannelWidth;
+    const int padleHeight;
+    bool FlipBallDirection;
+    std::string BallDirection;
+    Screen screen;
 
-    // Add other private variables and methods here
+public:
+    PongGame();
+    void play();
+    void setupGame(Screen sc, Ball ball, Padle player1, Padle player2);
+    bool checkWin(int GotoPositionX);
+    void setUpPlayfield();
 };
-}
+
 #endif // PONGGAME_H

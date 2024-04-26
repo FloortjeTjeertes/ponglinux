@@ -1,27 +1,26 @@
-# Makefile
-
 # Compiler
 CXX = g++
 
 # Compiler flags
-CXXFLAGS = -Wall -std=c++11
+CXXFLAGS = -Wall -std=c++11 -I./include
 
 # Target executable name
 TARGET = pong
 
 # Source files
-SRCS = pong.cpp
+SRCS = $(wildcard src/*.cpp)
 
 # Object files
-OBJS = $(SRCS:.cpp=.o)
+OBJS = $(patsubst src/%.cpp, src/%.o, $(SRCS))
 
 all: $(TARGET)
 
 $(TARGET): $(OBJS)
-    $(CXX) $(CXXFLAGS) -o $(TARGET) $(OBJS)
+	$(CXX) $(CXXFLAGS) -o $(TARGET) $(OBJS)
 
-.cpp.o:
-    $(CXX) $(CXXFLAGS) -c $<  -o $@
+src/%.o: src/%.cpp
+	$(CXX) $(CXXFLAGS) -c $< -o $@
 
 clean:
-    $(RM) $(OBJS) $(TARGET)
+	$(RM) $(OBJS) $(TARGET)
+	

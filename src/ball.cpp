@@ -1,9 +1,46 @@
-class ball{
- void BallAi()
+#include <string>
+#include <screen.h>
+#include <iostream>
+
+using std::string;
+using std::cout;
+
+class Ball
+{
+
+private:
+    int ballPositionY = 0;
+    int ballPositionX = 0;
+    int GoTox = 0;
+    int GoToy = 0;
+    string ballDirection = "";
+    bool north = true;
+    bool south = false;
+    bool east = true;
+    bool west = false;
+
+public:
+    Ball(int ballPositionY, int ballPositionX)
+    {
+        this->ballPositionY = ballPositionY;
+        this->ballPositionX = ballPositionX;
+    }
+
+    int getBallPositionY()
+    {
+        return ballPositionY;
+    }
+
+    int getBallPositionX()
+    {
+        return ballPositionX;
+    }
+
+    void ballAi(Screen screen)
     {
 
-        int GoTox = ballPositionX;
-        int GoToy = ballPositionY;
+        GoTox = ballPositionX;
+        GoToy = ballPositionY;
 
         string NS;
         string EW;
@@ -29,10 +66,10 @@ class ball{
             NS = "south";
         }
 
-        if (checkBounce(GoToy, GoTox))
+        if (checkBounce(GoToy, GoTox, screen))
         {
 
-            if (GoToy >= pannelHeight - 1 || GoToy <= 0)
+            if (GoToy >= screen.getScreenHeight() - 1 || GoToy <= 0)
             {
                 north = !north;
                 south = !south;
@@ -45,22 +82,24 @@ class ball{
             GoToy = ballPositionY;
             GoTox = ballPositionX;
         }
+        ballPositionY = GoToy;
+        ballPositionX = GoTox;
 
-        SetBall(GoToy, GoTox);
-
-        BallDirection = NS + " " + EW;
+        ballDirection = NS + " " + EW;
     }
-       bool checkBounce(int GotoPositionY, int GotoPositionX)
+
+private:
+    bool checkBounce(int GotoPositionY, int GotoPositionX, Screen screen)
     {
         bool bounce = false;
-        if (screen[GotoPositionY][GotoPositionX] == "#" || screen[GotoPositionY][GotoPositionX] == "|")
+        if (screen.getScreen(GotoPositionY,GotoPositionX)  == "#" || screen.getScreen(GotoPositionY,GotoPositionX) == "|")
         {
             bounce = true;
             cout << '\a';
         }
 
-        BallDirection += " " + screen[GotoPositionY][GotoPositionX];
+        ballDirection += " " + screen.getScreen(GotoPositionY,GotoPositionX);
 
         return bounce;
     }
-}
+};

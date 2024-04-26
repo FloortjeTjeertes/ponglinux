@@ -1,23 +1,31 @@
-#ifndef screen
-#define screen
+// screen.h
+#ifndef SCREEN_H
+#define SCREEN_H
 
 #include <vector>
-#include <stdio.h>
-#include <iostream>
-namespace pong
-{
-    class screen
-    {
-        public:
+#include <string>
+#include "ball.h"
+#include "padle.h"
 
-            void clearWindow();
-            void writeWindow();
-            void SetBall(int y ,int x);
-            void SetPadle(int Y1, int Y2);
-            void writeWindow()
-        private:
-            std::vector<std::vector<std::string>> screen;
-    
-    };
-}
-#endif 
+class Screen
+{
+private:
+    std::vector<std::vector<std::string>> screen;
+    const int growthFactor;
+    int pannelHeight;
+    int pannelWidth;
+    int padleHeight;
+
+public:
+    Screen(int pannelHeight, int pannelWidth, int padleHeight);
+    int getScreenHeight();
+    int getScreenWidth();
+    std::string getScreen(int y, int x);
+    void clearWindow();
+    void setBall(Ball ball);
+    void setPadle(Padle padle);
+    void writeScore();
+    void writeWindow();
+};
+
+#endif // SCREEN_H
