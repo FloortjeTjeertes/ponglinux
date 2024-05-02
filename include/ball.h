@@ -3,7 +3,7 @@
 #define BALL_H
 
 #include <string>
-#include "Screen.h"
+#include "screen.h"
 
 class Ball
 {
@@ -11,10 +11,12 @@ private:
     int Y;
     int X;
     std::string ballDirection;
-    bool north;
-    bool south;
-    bool east;
-    bool west;
+    bool north = true;
+    bool south = false;
+    bool east = true;
+    bool west = false;
+    int GoTox = 0;
+    int GoToy = 0;
 
 public:
     Ball(int ballPositionY, int ballPositionX);

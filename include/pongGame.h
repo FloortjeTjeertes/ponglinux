@@ -30,7 +30,6 @@ public:
     void play();
     void setupGame(Screen sc,Ball ball,Padle player1, Padle player2);
     bool checkWin(int GotoPositionX);
-    void setUpPlayfield(Screen screen);
 };
 
 #endif // PONGGAME_H

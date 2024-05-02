@@ -11,11 +11,8 @@
 using std::string;
 using namespace std;
 
-std::vector<std::vector<std::string>> screen;
-int growthFactor = 0;
-int screen_height = 0;
-int screen_width = 0;
-int padleHeight = 0;
+
+
 
 Screen::Screen(int pannelHeight, int pannelWidth, int padleHeight)
 {
@@ -38,6 +35,27 @@ int Screen::getScreenWidth()
 string Screen::getScreen(int y, int x)
 {
     return screen[y][x];
+}
+
+void Screen::setUpPlayfield()
+{
+
+    for (int y = 0; y < screen_height; y++)
+    {
+        for (int x = 0; x < screen_width; x++)
+        {
+            if (y == 0 || y == screen_height - 1)
+            {
+                this->screen[y][x] = "#";
+            }
+            else
+            {   
+                this->screen[y][0] = "#";
+                this->screen[y][x] = " ";
+                this->screen[y][screen_width - 1] = "#";
+            }
+        }
+    }
 }
 
 void Screen::clearWindow()
@@ -73,14 +91,6 @@ void Screen::setPadle(Padle padle)
     }
 }
 
-void Screen::writeScore(int padle1Score, int padle2Score, string BallDirection)
-{
-
-    cout << "Padle1=" << padle1Score << " padle2=" << padle2Score << " ball direction= " << BallDirection 
-    // << " X=" << ballPositionX << " Y=" << ballPositionY 
-    << endl;
-}
-
 void Screen::writeWindow(int padle1Score, int padle2Score, string BallDirection)
 {
     cout << "\x1B[2J\x1B[H";
@@ -95,8 +105,17 @@ void Screen::writeWindow(int padle1Score, int padle2Score, string BallDirection)
             row += screen[y][x] + " ";
         }
 
-        cout << row << "" << y << endl
+        cout << row << "" << y + 1 << endl
              << flush;
     }
     writeScore(padle1Score, padle2Score, BallDirection);
+}
+
+void Screen::writeScore(int padle1Score, int padle2Score, string BallDirection)
+{
+
+    cout << "Padle1=" << padle1Score << " padle2=" << padle2Score << " ball direction= " << BallDirection << endl
+         << "screen-height= " << screen_height << " screen-width= " << screen_width << " padle height= " << padleHeight << endl
+         << "X=" << x << " Y=" << y
+         << endl;
 }

@@ -15,6 +15,8 @@ private:
     int screen_width;
     int padleHeight;
     int growthFactor;
+    int x = 0;
+    int y = 0;
 
 public:
     void setPadle(Padle padle);
@@ -26,6 +28,7 @@ public:
     Screen(int pannelHeight, int pannelWidth, int padleHeight);
     void writeScore(int padle1Score, int padle2Score, std::string BallDirection);
     void writeWindow(int padle1Score, int padle2Score, std::string BallDirection);
+    void setUpPlayfield();
 };
 
 #endif // SCREEN_H

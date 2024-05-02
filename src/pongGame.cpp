@@ -53,21 +53,21 @@ using std::string;
 
 
         Screen newScreen(screen_Height, screen_Width, padle_Height);
-        Ball ball(3,4);
+        Ball ball(10,10);
         Padle padle1(1,2,padle_Height, screen_Height);
-        Padle padle2(1,screen_Width-2,padle_Height, screen_Height);
+        Padle padle2(1,5,padle_Height, screen_Height);
 
         // game loop
         while (true)
         {
 
-            newScreen.clearWindow();
-            PongGame::setUpPlayfield(newScreen);
+            newScreen.setUpPlayfield();
 
             usleep(10000 * 10);
             ball.ballAi(newScreen);
             padle1.padleAi(ball);
             padle2.padleAi(ball);
+            newScreen.setBall(ball);
             newScreen.setPadle(padle1);
             newScreen.setPadle(padle2);
 
@@ -100,7 +100,7 @@ using std::string;
     void PongGame::setupGame(Screen sc,Ball ball,Padle player1, Padle player2)
     {
         sc.clearWindow();
-        setUpPlayfield(sc);
+        sc.setUpPlayfield();
         sc.setPadle(player1);
         sc.setPadle(player2);
         sc.setBall(ball);
@@ -123,23 +123,4 @@ using std::string;
         return false;
     }
 
-    void PongGame::setUpPlayfield(Screen screen)
-    {
 
-        for (int y = 0; y <= screen_Height; y++)
-        {
-            for (int x = 0; x <= screen_Width; x++)
-            {
-                if (y == 0 || y == screen_Height - 1)
-                {
-                    screen.getScreen(y, x) = "#";
-                }
-                else
-                {
-                    screen.getScreen(y, 0) = " ";
-                    screen.getScreen(y, screen_Width - 1) = "#";
-
-                }
-            }
-        }
-    }

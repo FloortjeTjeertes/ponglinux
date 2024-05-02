@@ -19,19 +19,28 @@ BINDIR = bin
 # Object files
 OBJS = $(patsubst src/%.cpp, $(BUILDDIR)/%.o, $(SRCS))
 
-all: $(BUILDDIR) $(BINDIR)/$(TARGET)
+all: $(BUILDDIR) $(BINDIR) $(BINDIR)/$(TARGET)
+
+
 
 $(BINDIR)/$(TARGET): $(OBJS)
-	$(CXX) $(CXXFLAGS) -o $@ $(OBJS)
-
+	$(CXX) $(CXXFLAGS) -o $@ $(OBJS) #compile the source files into object files whit command g++  -c source.cpp -o object.o
+#assemble the object files into the target executable
 $(BUILDDIR)/%.o: src/%.cpp
-	$(CXX) $(CXXFLAGS) -c $< -o $@
+	$(CXX) $(CXXFLAGS) -c $< -o $@   
 
 $(BUILDDIR):
-	mkdir -p $(BUILDDIR)
+	mkdir -p $(BUILDDIR)  #make the build directory
 
 $(BINDIR):
-	mkdir -p $(BINDIR)
+	mkdir -p $(BINDIR)    #make the bin directory
+
+tidy:
+	clang-tidy $(SRCS) -header-filter=.* -- -I./include
+
+debug:
+	$(BINDIR)/$(TARGET)
+		gdb $(BINDIR)/$(TARGET)
 
 clean:
 	$(RM) -r $(BUILDDIR) $(BINDIR)
