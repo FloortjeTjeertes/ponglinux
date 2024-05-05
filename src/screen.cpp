@@ -91,23 +91,31 @@ void Screen::setPadle(Padle padle)
     }
 }
 
+void Screen::clearTerminal()
+{
+    cout << "\033[2J\033[1;1H";
+}
+
 void Screen::writeWindow(int padle1Score, int padle2Score, string BallDirection)
 {
-    cout << "\x1B[2J\x1B[H";
+    std::string buffer;
 
     for (int y = 0; y < screen_height; y++)
     {
-        string row = "";
 
         for (int x = 0; x < screen_width; x++)
         {
 
-            row += screen[y][x] + " ";
+            buffer += screen[y][x] + " ";
         }
+        buffer += "\n";
+        //clear the console
+  
 
-        cout << row << "" << y + 1 << endl
-             << flush;
     }
+    cout << "\x1B[H";
+
+    cout << buffer << endl;
     writeScore(padle1Score, padle2Score, BallDirection);
 }
 

@@ -19,16 +19,17 @@ private:
     int y = 0;
 
 public:
+    Screen(int pannelHeight, int pannelWidth, int padleHeight);
     void setPadle(Padle padle);
     void setBall(Ball ball);
     void clearWindow();
     std::string getScreen(int y, int x);
     int getScreenWidth();
     int getScreenHeight();
-    Screen(int pannelHeight, int pannelWidth, int padleHeight);
     void writeScore(int padle1Score, int padle2Score, std::string BallDirection);
     void writeWindow(int padle1Score, int padle2Score, std::string BallDirection);
     void setUpPlayfield();
+    void clearTerminal();
 };
 
 #endif // SCREEN_H

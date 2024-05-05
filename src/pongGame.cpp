@@ -56,6 +56,7 @@ using std::string;
         Ball ball(10,10);
         Padle padle1(1,2,padle_Height, screen_Height);
         Padle padle2(1,5,padle_Height, screen_Height);
+        setupGame(newScreen,ball,padle1,padle2);
 
         // game loop
         while (true)
@@ -99,6 +100,7 @@ using std::string;
 
     void PongGame::setupGame(Screen sc,Ball ball,Padle player1, Padle player2)
     {
+        sc.clearTerminal();
         sc.clearWindow();
         sc.setUpPlayfield();
         sc.setPadle(player1);
