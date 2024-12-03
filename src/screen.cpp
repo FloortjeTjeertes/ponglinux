@@ -51,7 +51,7 @@ void Screen::setUpPlayfield()
             else
             {   
                 this->screen[y][0] = "#";
-                this->screen[y][x] = " ";
+                this->screen[y][x] = "░";
                 this->screen[y][screen_width - 1] = "#";
             }
         }
@@ -76,7 +76,7 @@ void Screen::setBall(Ball ball)
     {
         int ballPositionX = ball.getBallPositionX();
         int ballPositionY = ball.getBallPositionY();
-        screen[ballPositionY][ballPositionX] = "○";
+        screen[ballPositionY][ballPositionX] = "▒";
     }
     else
     {
@@ -87,7 +87,7 @@ void Screen::setPadle(Padle padle)
 {
     for (int i = 0; i < padleHeight; i++)
     {
-        screen[padle.getPadleY() + i][1] = '|';
+        screen[padle.getPadleY() + i][1] = "▓";
     }
 }
 
@@ -106,7 +106,7 @@ void Screen::writeWindow(int padle1Score, int padle2Score, string BallDirection)
         for (int x = 0; x < screen_width; x++)
         {
 
-            buffer += screen[y][x] + " ";
+            buffer += screen[y][x] + "░";
         }
         buffer += "\n";
         //clear the console

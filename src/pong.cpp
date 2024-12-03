@@ -5,8 +5,8 @@
 using namespace std;
 // using namespace pong;
 
-int main()
-{
+int main(int argc, char* argv[])
+{   
     PongGame pongGame;
     pongGame.play();
 
